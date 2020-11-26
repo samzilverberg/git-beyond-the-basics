@@ -1,0 +1,536 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Git - beyond the basics</title>
+
+  <link rel="stylesheet" href="dist/reset.css">
+  <link rel="stylesheet" href="dist/reveal.css">
+  <link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+  <!-- Theme used for syntax highlighted code -->
+  <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <section>
+      <h1>Git</h1>
+      <h2>Beyond the basics</h2>
+      <a href="https://github.com/samzilverberg/git-beyond-the-basics">https://github.com/samzilverberg/git-beyond-the-basics</a>
+    </section>
+
+
+    <section data-markdown>
+      <script type="text/template">
+        ## what are the basics?
+
+        The commands we use for our most basic daily work.
+        <aside class="notes" data-markdown>
+          - we write code locally
+          - and make it available for other remotely
+        </aside>
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        ### Making changes:
+
+        ```
+        git checkout
+        git add & reset
+        git commit
+        git push & pull
+        git merge
+        ```
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        ### Checking state:
+
+        ```
+        git status
+        git diff
+        git log
+        git blame ("Git: Annotate" on intellij)
+        ```
+      </script>
+    </section>
+
+    <section>
+      <h2>Collaboration with others</h2>
+
+      <p style="text-align: left">
+        When working alone you can do whatever you want.<br/><br/>
+        You can work as clean or dirty without disturbing anyone but yourself.
+      </p>
+
+      <aside class="notes" data-markdown>
+        - alone: as many "fix" commits as you want
+        - alone: main branch can break and you'll fixit later
+        - alone: you decide how much you care about your commit messages and git log (history)
+      </aside>
+    </section>
+
+
+    <section>
+      <h2>Collaboration with others</h2>
+
+      <p style="text-align: left">
+        When collaborating with others you should probably follow some paradigm/workflow to minimize disturbances.
+      </p>
+    </section>
+
+    <section>
+      <h2>Paradigms/Workflows</h2>
+
+      <p>Define:</p>
+
+      <ul>
+        <li>commit messages practices</li>
+        <li>branching and merging (and reviewing)</li>
+        <li>release practices</li>
+      </ul>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        ## trunk based
+
+        everyone works on main branch!
+
+        image from https://trunkbaseddevelopment.com/ :
+        ![](images/trunkbased.png)
+      </script>
+
+      <aside class="notes" data-markdown>
+        - this is one flavor of trunk based
+        - there are many flavors (release from master, short lived branches)
+        - visit the site if you want to read more (comparison with others as well)
+      </aside>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        #### some problems with everyone committing to main:
+
+        - git conflicts all the time
+        - no review process?
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        #### Solution: pairing/mob programming
+
+        Its really a must for this method to be successful.
+
+        - code+review is done at the same time
+        - knowledge of work is being shared
+        - reduces git conflicts (less parallel work)
+
+        IMO when you have more than 4 devs (more than 2 pairs) you come back to the conflicts problem.
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        #### Feature Flags
+
+        Trunk based development often includes feature flags (or toggles/gates) as a way to
+        to keep WIP features from being available on releases.
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        ### Simple Branching (also feature branching)
+
+        branch out from main for everything (features, fixes, tasks) and merge back in when done.
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        #### Pitfalls:
+
+        - long lasting branches
+        - large branches with lots of changes
+
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        #### Solutions:
+
+        - discipline!
+        - work in small units of changes
+        - cut your "work" units (tickets?) in smaller chunks
+        - don't stick to 1 ticket = 1 pull request
+        - don't make changes that are not related to what you're currently working on (tempting......)
+
+        <aside class="notes" data-markdown>
+          - do make refactor that are related to what you're working on!
+        </aside>
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        ### git flow
+
+        https://nvie.com/posts/a-successful-git-branching-model/
+
+        ![](images/gitflow.png)
+      </script>
+
+      <aside class="notes" data-markdown>
+        - created around 2010, is considered "bloated" for most projects that simply go through ci/cd and deployed.
+        - its good for larger projects that need release cycles or have multiple versions (the create of git flow commented so)
+        - problem: a lot of process
+        - BUT this can be good where a lot of control is needed
+      </aside>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        ### github flow
+
+        https://guides.github.com/introduction/flow/
+
+        ![](images/githubflow.png)
+      </script>
+
+      <aside class="notes" data-markdown>
+        - this is simple/feature branching integrated with github services
+        - PRs, github actions etc
+      </aside>
+    </section>
+
+    <section>
+      <h3>Fork Flow</h3>
+
+      <p style="text-align: left;">
+        I think it was born with github introducing fork (correct me if wrong).<br/><br/>
+        You don't have permission to write to open-source repos. so you:
+      </p>
+
+
+      <ul>
+        <li>fork repo to your user</li>
+        <li>work on your fork</li>
+        <li>make a PR and pray</li>
+      </ul>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        ### fork flow diagram
+
+        ![](images/forkflow.png)
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        ### problems syncing with latest changes
+
+        viable for all work flows
+
+        - On trunk: problems getting latest remote main changes to local
+        - On branches: problems getting latest changes to your branch, or putting your changes back on main.
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        ### tools of the sync: merge, rebase
+
+        ![](images/rebase_merge.png)
+      </script>
+
+      <aside class="notes" data-markdown>
+        - when you are pulling a merge is done by default if needed (unless pull --rebase)
+        - merge A into B = merge commits from A into B preserving when commits were made, and create a new merge commit as latest commit
+        - rebase B ontop of A = take A as is and replay all commits from begining of B until done. this creates new history because the replayed commits are not the original ones anymore (time & commiter = you change)
+      </aside>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        ### merge vs rebase?
+
+        we're not going to take any side here.
+
+        both are tools, we'll just concentrate on how they work and what you can achieve with them.
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        ### Merge
+
+        - Pro: conserves history of commits as they took place
+        - Pro: resolve conflicts once - at merge
+        - Con: produces a lot of merge commits
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        ### merge hell?
+
+        ![](images/mergehell.png)
+        <aside class="notes" data-markdown>
+          - too many merges and sub branches is a pain
+        </aside>
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        ### Rebase
+
+        - Pro: lets you re-organize commits as you want
+        - Con: changes history!
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        ### rebase hell?
+
+        ![](images/rebasehell.png)
+        <aside class="notes" data-markdown>
+          - because commits are replayed, you possibly need to solve conflicts on each step
+        </aside>
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        #### When should I use merge?
+
+        When you really need to preserve the original commits order & time.
+
+        When you should not change history (sharing branch with others).
+
+        <aside class="notes" data-markdown>
+        </aside>
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        #### When should I use rebase?
+
+        When you're working (alone) on a branch and just want to get latest main changes.
+
+        When you want to cleanup commits on a branch, rebase can:
+
+        - squash/fixup: put X commits into 1
+        - reorder commits
+        - amend: change commit messages
+
+        <aside class="notes" data-markdown>
+        </aside>
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        #### should you care about history?
+
+        Maybe, it can be useful to care, it makes it easier to track changes from the past, easier to read as a changes log.
+        <aside class="notes" data-markdown>
+        </aside>
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        #### conclusion of rebase/merge:
+
+        If you don't care too much about your git history just use merge all the time.
+
+        If you'd like the history to be nice, try to incorporate rebase in your work.
+
+      </script>
+    </section>
+
+    <section data-markdown>
+      <script type="text/template">
+        ## misc
+
+        lets look at some more useful commands and scenarios
+      </script>
+    </section>
+
+
+    <section data-markdown>
+      <script type="text/template">
+        ### same conflicts all the time
+
+        If you find yourself solving the same conflicts all the time then try out
+
+        ```
+        git rerere
+        ```
+
+        It remembers how you solved conflicts and can reapply them for you.
+      </script>
+    </section>
+
+
+    <section data-markdown>
+      <script type="text/template">
+        ### accidental commit of non related work to branch
+
+        If you can change history (push -f):
+
+        ```
+        git cherry-pick
+        ```
+
+        create new branch and cherry-pick the commit to it.
+
+        go to problematic branch
+        ```
+        reset --hard HEAD~1
+        push -f
+        ```
+
+        <aside class="notes" data-markdown>
+        </aside>
+      </script>
+    </section>
+    <section data-markdown>
+      <script type="text/template">
+        ### accidental commit of non related work to branch
+
+        If you can't change history (someone else is using branch)
+
+        create a revert commit:
+
+        ```
+        git revert commit-hash-here
+        ```
+
+        <aside class="notes" data-markdown>
+        </aside>
+      </script>
+    </section>
+
+
+    <section data-markdown>
+      <script type="text/template">
+        ### bad rebase/merge
+
+        Branch is a disaster but was ok 5 mins ago
+
+        ```
+        git reflog
+        ```
+
+        it tracks locall ALL git taken actions as changes with hashes.
+        so you can "checkout" (or `reset --hard`) to a hash from 5 mins ago.
+
+      </script>
+    </section>
+
+
+    <section data-markdown>
+      <script type="text/template">
+        ### local changes on 1 file that i want to get rid of in favor of main
+
+        git restore
+
+        ```
+        git restore snap-backend/src/main/scala/com/springernature/snap/domain/usage/counter5/CounterReportPreferences.scala --source=HEAD
+        ```
+
+        <aside class="notes" data-markdown>
+        </aside>
+      </script>
+    </section>
+
+
+    <section data-markdown>
+      <script type="text/template">
+        ### can't pull because of local changes
+
+        ```
+        git stash
+        git pull
+        git stash pop
+        ```
+        <aside class="notes" data-markdown>
+        </aside>
+      </script>
+    </section>
+
+
+    <section data-markdown>
+      <script type="text/template">
+        ## beyond that
+
+        just check the official reference:
+
+        https://git-scm.com/docs
+
+        <aside class="notes" data-markdown>
+        </aside>
+      </script>
+    </section>
+
+
+
+    <section data-markdown>
+      <script type="text/template">
+        That's all for today.
+
+        Thanks.
+        <aside class="notes" data-markdown>
+        </aside>
+      </script>
+    </section>
+
+
+    <section data-markdown>
+      <script type="text/template">
+        links
+
+        - lala
+        - po
+        <aside class="notes" data-markdown>
+        </aside>
+      </script>
+    </section>
+
+  </div>
+</div>
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script>
+  // More info about initialization & config:
+  // - https://revealjs.com/initialization/
+  // - https://revealjs.com/config/
+  Reveal.initialize({
+    hash: true,
+
+    // Learn about plugins: https://revealjs.com/plugins/
+    plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+  });
+</script>
+</body>
+</html>
