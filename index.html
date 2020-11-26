@@ -189,14 +189,14 @@
         https://nvie.com/posts/a-successful-git-branching-model/
 
         ![](images/gitflow.png)
+        <aside class="notes" data-markdown>
+          - created around 2010, is considered "bloated" for most projects that simply go through ci/cd and deployed.
+          - its good for larger projects that need release cycles or have multiple versions (the create of git flow commented so)
+          - problem: a lot of process
+          - BUT this can be good where a lot of control is needed
+        </aside>
       </script>
 
-      <aside class="notes" data-markdown>
-        - created around 2010, is considered "bloated" for most projects that simply go through ci/cd and deployed.
-        - its good for larger projects that need release cycles or have multiple versions (the create of git flow commented so)
-        - problem: a lot of process
-        - BUT this can be good where a lot of control is needed
-      </aside>
     </section>
 
     <section data-markdown>
@@ -206,12 +206,12 @@
         https://guides.github.com/introduction/flow/
 
         ![](images/githubflow.png)
+        <aside class="notes" data-markdown>
+          - this is simple/feature branching integrated with github services
+          - PRs, github actions etc
+        </aside>
       </script>
 
-      <aside class="notes" data-markdown>
-        - this is simple/feature branching integrated with github services
-        - PRs, github actions etc
-      </aside>
     </section>
 
     <section>
@@ -254,13 +254,13 @@
         ### tools of the sync: merge, rebase
 
         ![](images/rebase_merge.png)
+        <aside class="notes" data-markdown>
+          - when you are pulling a merge is done by default if needed (unless pull --rebase)
+          - merge A into B = merge commits from A into B preserving when commits were made, and create a new merge commit as latest commit
+          - rebase B ontop of A = take A as is and replay all commits from begining of B until done. this creates new history because the replayed commits are not the original ones anymore (time & commiter = you change)
+        </aside>
       </script>
 
-      <aside class="notes" data-markdown>
-        - when you are pulling a merge is done by default if needed (unless pull --rebase)
-        - merge A into B = merge commits from A into B preserving when commits were made, and create a new merge commit as latest commit
-        - rebase B ontop of A = take A as is and replay all commits from begining of B until done. this creates new history because the replayed commits are not the original ones anymore (time & commiter = you change)
-      </aside>
     </section>
 
     <section data-markdown>
